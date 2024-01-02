@@ -1,0 +1,30 @@
+managed implementation in class zbp_i_student_0008 unique;
+strict ( 2 );
+
+define behavior for ZI_STUDENT_0008 alias Student
+persistent table zgy_rap_0008
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+
+    field ( numbering : managed, readonly ) Id;
+
+  mapping for zgy_rap_0008
+  {
+    Id = id;
+    Firstname = firstname;
+    Lastname = lastname;
+    Age = age;
+    Course = course;
+    Courseduration = courseduration;
+    Status = status;
+    Gender = gender;
+    Dob = dob;
+    Lastchangedat = lastchangedat;
+    Locallastchangedat = locallastchangedat;
+}
+}

@@ -12,6 +12,7 @@ authorization master ( instance )
   delete;
 
     field ( numbering : managed, readonly ) Id;
+    action ( features : instance ) setAdmitted result [1] $self;
 
   mapping for zgy_rap_0008
   {

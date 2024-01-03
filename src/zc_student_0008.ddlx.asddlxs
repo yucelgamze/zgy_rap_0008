@@ -32,8 +32,10 @@ annotate view ZC_STUDENT_0008 with
   @UI: { lineItem: [{ position: 60 , label: 'Course Duration'}],
   identification: [{ position: 60 , label: 'Course Duration'}] }
   Courseduration;
-  @UI: { lineItem: [{ position: 70 , label: 'Status'}],
-  identification: [{ position: 70 , label: 'Status'}] }
+  @UI: { lineItem: [{ position: 70 , label: 'Status'},
+  { type: #FOR_ACTION, dataAction: 'setAdmitted', label: 'Set Admitted✔' }],
+  identification: [{ position: 70 , label: 'Status'},
+  { type: #FOR_ACTION, dataAction: 'setAdmitted', label: 'Set Admitted✔' }] }
   Status;
   @UI: { lineItem: [{ position: 80 , label: 'Gender'}],
   identification: [{ position: 80 , label: 'Gender'}] }

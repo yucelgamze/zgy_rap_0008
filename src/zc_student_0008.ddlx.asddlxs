@@ -39,7 +39,12 @@ annotate view ZC_STUDENT_0008 with
   Status;
   @UI: { lineItem: [{ position: 80 , label: 'Gender'}],
   identification: [{ position: 80 , label: 'Gender'}] }
+
+  @Consumption.valueHelpDefinition: [{ entity:{ name: 'ZI_GENDER_0008', element: 'Value'},
+  distinctValues: true, additionalBinding: [{ localElement: 'Genderdesc', element: 'Description', usage: #FILTER_AND_RESULT }] }]
   Gender;
+  @UI: { identification: [{ position: 85 , label: ''}] }
+  Genderdesc;
   @UI: { lineItem: [{ position: 90 , label: 'Date of Birth'}],
   identification: [{ position: 90 , label: 'Date of Birth'}] }
   Dob;

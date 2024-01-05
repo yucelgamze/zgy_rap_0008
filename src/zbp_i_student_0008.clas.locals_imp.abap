@@ -16,6 +16,15 @@ CLASS lhc_Student IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_instance_features.
+    READ ENTITIES OF zi_student_0008 IN LOCAL MODE
+    ENTITY Student
+    FIELDS ( Status ) WITH CORRESPONDING #( keys )
+    RESULT DATA(studentadmitted)
+    FAILED failed.
+
+    result = VALUE #( FOR student IN studentadmitted
+     LET statusvalue = COND #( WHEN student-Status = abap_true THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled )
+     IN ( %tky = student-%tky %action-setAdmitted = statusvalue ) ).
   ENDMETHOD.
 
   METHOD setAdmitted.

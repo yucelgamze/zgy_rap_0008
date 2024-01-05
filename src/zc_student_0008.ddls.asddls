@@ -28,6 +28,7 @@ define root view entity ZC_STUDENT_0008
       Status,
       @EndUserText.label: 'Gender'
       Gender,
+      Genderdesc,
       @EndUserText.label: 'Date of Birth'
       Dob,
       Lastchangedat,

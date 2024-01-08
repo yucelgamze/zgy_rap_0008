@@ -11,21 +11,39 @@ authorization master ( instance )
   update;
   delete;
 
-    field ( numbering : managed, readonly ) Id;
-    action ( features : instance ) setAdmitted result [1] $self;
+  association _academicres { create; }
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) Genderdesc;
+  action ( features : instance ) setAdmitted result [1] $self;
 
   mapping for zgy_rap_0008
-  {
-    Id = id;
-    Firstname = firstname;
-    Lastname = lastname;
-    Age = age;
-    Course = course;
-    Courseduration = courseduration;
-    Status = status;
-    Gender = gender;
-    Dob = dob;
-    Lastchangedat = lastchangedat;
-    Locallastchangedat = locallastchangedat;
+    {
+      Id                 = id;
+      Firstname          = firstname;
+      Lastname           = lastname;
+      Age                = age;
+      Course             = course;
+      Courseduration     = courseduration;
+      Status             = status;
+      Gender             = gender;
+      Dob                = dob;
+      Lastchangedat      = lastchangedat;
+      Locallastchangedat = locallastchangedat;
+    }
 }
+define behavior for ZI_AR_0008 alias Academic
+persistent table zgy_ar_0008
+lock dependent by _student
+authorization dependent by _student
+//etag master <field_name>
+{
+  update;
+  delete;
+  association _student;
+
+  field ( readonly ) Id;
+  field ( readonly ) course_desc;
+  field ( readonly ) semester_desc;
+  field ( readonly ) semres_desc;
 }

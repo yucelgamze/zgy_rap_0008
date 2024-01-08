@@ -1,0 +1,57 @@
+@Metadata.layer: #PARTNER
+@UI:
+{
+    headerInfo : {
+                    typeName: 'Academic Result Detail',
+                    typeNamePlural: 'Academic Result Details',
+                    title:{type: #STANDARD,label: 'Academic Result Detail',value: 'Id' },
+                    description :{ type: #STANDARD,label: 'Academic Result Detail' }
+                 },
+       presentationVariant: [{sortOrder: [{ by: 'Semester',direction: #ASC }] }]
+}
+@Search.searchable: true
+annotate view ZC_AR_0008 with
+{
+  @UI.facet: [{ id: 'Academic',
+            label: 'Academic',
+            purpose: #STANDARD,
+            type: #IDENTIFICATION_REFERENCE,
+            position: 10 }]
+
+  @UI: { identification: [{position: 10,label: 'Student ID' }] }
+  @UI.hidden: true
+  Id;
+  @UI: { lineItem: [{position: 20,label: 'Course',importance: #HIGH }], 
+        identification: [{position: 20,label: 'Course' }] }
+  @Search.defaultSearchElement: true
+  @Consumption.valueHelpDefinition: [{ entity :{ name: 'ZI_COURSE_0008',element: 'Value' },
+  additionalBinding: [{ localElement: 'course_desc',element: 'Description' }]
+   }]
+  Course;
+  @UI: { lineItem: [{position: 30,label: '',importance: #HIGH }],
+         identification: [{position: 30,label: '' }] }
+  @Search.defaultSearchElement: true
+  course_desc;
+  @UI: { lineItem: [{position: 40,label: 'Semester',importance: #HIGH }], 
+         identification: [{position: 40,label: 'Semester' }] }
+  @Search.defaultSearchElement: true
+  @Consumption.valueHelpDefinition: [{ entity :{ name: 'ZI_SEM_0008',element: 'Value' },
+ additionalBinding: [{ localElement: 'semester_desc',element: 'Description' }]
+  }]
+  Semester;
+  @UI: { lineItem: [{position: 50,label: '',importance: #HIGH }], 
+         identification: [{position: 50,label: '' }] }
+  @Search.defaultSearchElement: true
+  semester_desc;
+  @UI: { lineItem: [{position: 60,label: 'Status',importance: #HIGH }], 
+         identification: [{position: 60,label: 'Status' }] }
+  @Search.defaultSearchElement: true
+  @Consumption.valueHelpDefinition: [{ entity :{ name: 'ZI_SEMRES_0008',element: 'Value' },
+  additionalBinding: [{ localElement: 'semres_desc',element: 'Description' }]
+   }]
+  Semresult;
+  @UI: { lineItem: [{position: 70, label: '',importance: #HIGH  }], 
+         identification: [{position: 70,label: '' }] }
+  @Search.defaultSearchElement: true
+  semres_desc;
+  }

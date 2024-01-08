@@ -32,5 +32,6 @@ define root view entity ZC_STUDENT_0008
       @EndUserText.label: 'Date of Birth'
       Dob,
       Lastchangedat,
-      Locallastchangedat
+      Locallastchangedat,
+      _academicres: redirected to composition child ZC_AR_0008
 }

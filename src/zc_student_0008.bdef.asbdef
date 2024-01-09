@@ -1,5 +1,6 @@
 projection;
-strict ( 2 );
+//strict ( 1 );
+use draft;
 
 define behavior for ZC_STUDENT_0008 alias Student
 {

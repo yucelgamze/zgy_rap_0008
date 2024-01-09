@@ -1,11 +1,14 @@
 managed implementation in class zbp_i_student_0008 unique;
-strict ( 2 );
+//strict ( 1 );
+
+with draft;
 
 define behavior for ZI_STUDENT_0008 alias Student
 persistent table zgy_rap_0008
-lock master
+draft table zgy_rapd_0008
+lock master total etag Lastchangedat
 authorization master ( instance )
-//etag master <field_name>
+etag master Locallastchangedat
 {
   create;
   update;
@@ -35,9 +38,9 @@ authorization master ( instance )
 }
 define behavior for ZI_AR_0008 alias Academic
 persistent table zgy_ar_0008
+draft table zgy_ard_0008
 lock dependent by _student
 authorization dependent by _student
-//etag master <field_name>
 {
   update;
   delete;

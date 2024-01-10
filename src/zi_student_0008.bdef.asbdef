@@ -20,6 +20,7 @@ etag master Locallastchangedat
   field ( readonly ) Genderdesc;
   action ( features : instance ) setAdmitted result [1] $self;
   validation validateAge on save { field Age; create; }
+  determination updateCourseDuration on save { field Course; }
 
   mapping for zgy_rap_0008
     {

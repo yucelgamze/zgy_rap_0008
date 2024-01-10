@@ -9,6 +9,8 @@ CLASS lhc_Student DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys REQUEST requested_features FOR student RESULT result.
     METHODS validateage FOR VALIDATE ON SAVE
       IMPORTING keys FOR student~validateage.
+    METHODS updatecourseduration FOR DETERMINE ON SAVE
+      IMPORTING keys FOR student~updatecourseduration.
 
 ENDCLASS.
 
@@ -50,7 +52,6 @@ CLASS lhc_Student IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD validateAge.
 
     READ ENTITIES OF zi_student_0008 IN LOCAL MODE
@@ -68,6 +69,35 @@ CLASS lhc_Student IMPLEMENTATION.
                                  text     = |Age cannot be less than 21 |
                                ) ) TO reported-student.
       ENDIF.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD updateCourseDuration.
+
+    READ ENTITIES OF zi_student_0008 IN LOCAL MODE
+    ENTITY Student
+    FIELDS ( Course ) WITH CORRESPONDING #( keys )
+    RESULT DATA(studentsCourse).
+
+    LOOP AT studentscourse  INTO DATA(studentCourse).
+      CASE studentcourse-Course.
+        WHEN 'Calculus'.
+          MODIFY ENTITIES OF zi_student_0008 IN LOCAL MODE
+          ENTITY Student
+          UPDATE
+          FIELDS ( Courseduration ) WITH VALUE #( ( %tky = studentcourse-%tky Courseduration = 5 ) ).
+        WHEN 'Electronic Circuits'.
+          MODIFY ENTITIES OF zi_student_0008 IN LOCAL MODE
+          ENTITY Student
+          UPDATE
+          FIELDS ( Courseduration ) WITH VALUE #( ( %tky = studentcourse-%tky Courseduration = 7 ) ).
+        WHEN 'Microcontrollers'.
+          MODIFY ENTITIES OF zi_student_0008 IN LOCAL MODE
+          ENTITY Student
+          UPDATE
+          FIELDS ( Courseduration ) WITH VALUE #( ( %tky = studentcourse-%tky Courseduration = 3 ) ).
+      ENDCASE.
     ENDLOOP.
 
   ENDMETHOD.

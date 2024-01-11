@@ -54,6 +54,15 @@ annotate view ZC_STUDENT_0008 with
   @UI: { lineItem: [{ position: 90 , label: 'Date of Birth'}],
   identification: [{ position: 90 , label: 'Date of Birth'}] }
   Dob;
+  @UI: { lineItem: [{ position: 100 , label: 'Salary'}],
+  identification: [{ position: 100 , label: 'Salary'}] }
+  Salary;
+  @UI: { lineItem: [{ position: 105 , label: 'Total Pay'}],
+  identification: [{ position: 105 , label: 'Total Pay'}] }
+  BonusAmount;
+  @UI: { lineItem: [{ position: 110 , label: 'Role'}],
+  identification: [{ position: 110 , label: 'Role'}] }
+  Role;
   @UI.hidden: true
   Lastchangedat;
   @UI.hidden: true

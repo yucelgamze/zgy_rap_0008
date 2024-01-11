@@ -33,6 +33,8 @@ etag master Locallastchangedat
       Status             = status;
       Gender             = gender;
       Dob                = dob;
+      Salary             = salary;
+      Role               = role;
       Lastchangedat      = lastchangedat;
       Locallastchangedat = locallastchangedat;
     }

@@ -31,7 +31,14 @@ define root view entity ZC_STUDENT_0008
       Genderdesc,
       @EndUserText.label: 'Date of Birth'
       Dob,
+      @EndUserText.label: 'Salary'
+      Salary,
+      @EndUserText.label: 'Role'
+      Role,
       Lastchangedat,
       Locallastchangedat,
-      _academicres: redirected to composition child ZC_AR_0008
+      _academicres : redirected to composition child ZC_AR_0008,
+      @ObjectModel.virtualElementCalculatedBy: 'ZCL_CALCULATE_0008'
+      @EndUserText.label: 'Total Pay'
+      virtual BonusAmount : abap.int4
 }

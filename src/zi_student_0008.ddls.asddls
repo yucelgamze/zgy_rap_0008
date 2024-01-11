@@ -22,6 +22,8 @@ define root view entity ZI_STUDENT_0008
       status              as Status,
       gender              as Gender,
       dob                 as Dob,
+      salary              as Salary,
+      role                as Role,
       lastchangedat       as Lastchangedat,
       locallastchangedat  as Locallastchangedat,
       _gender,

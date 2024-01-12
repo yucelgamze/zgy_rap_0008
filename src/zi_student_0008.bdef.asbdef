@@ -11,7 +11,7 @@ authorization master ( instance )
 etag master Locallastchangedat
 {
   create;
-  update;
+  update ( precheck );
   delete;
 
   association _academicres { create; }
@@ -21,7 +21,7 @@ etag master Locallastchangedat
   action ( features : instance ) setAdmitted result [1] $self;
   validation validateAge on save { field Age; create; }
   determination updateCourseDuration on save { field Course; }
-  determination changeSalary on save { field Role; }
+  determination changeSalary on modify { field Role; }
 
   mapping for zgy_rap_0008
     {

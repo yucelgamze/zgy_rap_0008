@@ -11,6 +11,7 @@
 define root view entity ZI_STUDENT_0008
   as select from zgy_rap_0008
   association to zi_gender_0008    as _gender on $projection.Gender = _gender.Value
+  association to ZI_COURSE_0008    as _course on $projection.Course = _course.Value
   composition [0..*] of ZI_AR_0008 as _academicres
 {
   key id                  as Id,
@@ -28,5 +29,7 @@ define root view entity ZI_STUDENT_0008
       locallastchangedat  as Locallastchangedat,
       _gender,
       _gender.Description as Genderdesc,
+      _course,
+      _course.Description as course_desc,
       _academicres
 }

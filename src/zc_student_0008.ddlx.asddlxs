@@ -34,6 +34,9 @@ annotate view ZC_STUDENT_0008 with
   Age;
   @UI: { lineItem: [{ position: 50 , label: 'Course'}],
   identification: [{ position: 50 , label: 'Course'}] }
+  
+  @Consumption.valueHelpDefinition: [{ entity :{ name: 'ZI_COURSE_0008',element: 'Value' },
+  distinctValues: true, additionalBinding: [{ localElement: 'course_desc',element: 'Description', usage: #FILTER_AND_RESULT }]}]
   Course;
   @UI: { lineItem: [{ position: 60 , label: 'Course Duration'}],
   identification: [{ position: 60 , label: 'Course Duration'}] }

@@ -11,8 +11,10 @@ CLASS lhc_Student DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR student~validateage.
     METHODS updatecourseduration FOR DETERMINE ON SAVE
       IMPORTING keys FOR student~updatecourseduration.
-    METHODS changesalary FOR DETERMINE ON SAVE
+    METHODS changesalary FOR DETERMINE ON MODIFY
       IMPORTING keys FOR student~changesalary.
+    METHODS precheck_update FOR PRECHECK
+      IMPORTING entities FOR UPDATE student.
 
 ENDCLASS.
 
@@ -124,6 +126,36 @@ CLASS lhc_Student IMPLEMENTATION.
           UPDATE
           FIELDS ( Salary ) WITH VALUE #( ( %tky = ls_role-%tky Salary = 900 ) ).
       ENDCASE.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD precheck_update.
+
+    LOOP AT entities ASSIGNING FIELD-SYMBOL(<lfs_entity>).
+      CHECK <lfs_entity>-Course EQ '01' OR <lfs_entity>-Courseduration EQ '01'.
+      READ ENTITIES OF zi_student_0008 IN LOCAL MODE
+      ENTITY Student
+      FIELDS ( Course Courseduration ) WITH VALUE #( ( %key = <lfs_entity>-%key ) )
+      RESULT DATA(lt_course).
+
+      IF sy-subrc IS INITIAL.
+        READ TABLE lt_course ASSIGNING FIELD-SYMBOL(<lfs_course>) INDEX 1.
+        IF sy-subrc IS INITIAL.
+          <lfs_course>-Course = COND #( WHEN <lfs_entity>-Course EQ '01' THEN <lfs_entity>-Course ELSE <lfs_course>-Course ).
+          <lfs_course>-Courseduration = COND #( WHEN <lfs_entity>-Courseduration EQ '01' THEN <lfs_entity>-Courseduration ELSE <lfs_course>-Courseduration ).
+          IF <lfs_course>-Courseduration LT 5.
+            IF <lfs_course>-Course = 'Calculus'.
+              APPEND VALUE #( %tky = <lfs_entity>-%tky ) TO failed-student.
+              APPEND VALUE #( %tky = <lfs_entity>-%tky
+              %msg = new_message_with_text(
+                       severity = if_abap_behv_message=>severity-error
+                       text     = 'Invalid Course duration!'
+                     ) ) TO reported-student.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+      ENDIF.
     ENDLOOP.
 
   ENDMETHOD.

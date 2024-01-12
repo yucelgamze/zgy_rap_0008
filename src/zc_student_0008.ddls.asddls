@@ -22,6 +22,7 @@ define root view entity ZC_STUDENT_0008
       Age,
       @EndUserText.label: 'Course'
       Course,
+      course_desc,
       @EndUserText.label: 'Course Duration'
       Courseduration,
       @EndUserText.label: 'Status'

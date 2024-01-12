@@ -11,6 +11,8 @@ CLASS lhc_Student DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR student~validateage.
     METHODS updatecourseduration FOR DETERMINE ON SAVE
       IMPORTING keys FOR student~updatecourseduration.
+    METHODS changesalary FOR DETERMINE ON SAVE
+      IMPORTING keys FOR student~changesalary.
 
 ENDCLASS.
 
@@ -97,6 +99,30 @@ CLASS lhc_Student IMPLEMENTATION.
           ENTITY Student
           UPDATE
           FIELDS ( Courseduration ) WITH VALUE #( ( %tky = studentcourse-%tky Courseduration = 3 ) ).
+      ENDCASE.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD changeSalary.
+
+    READ ENTITIES OF zi_student_0008 IN LOCAL MODE
+    ENTITY Student
+    FIELDS ( Course ) WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_roles).
+
+    LOOP AT lt_roles INTO DATA(ls_role).
+      CASE ls_role-Role.
+        WHEN 'Proffessor'.
+          MODIFY ENTITIES OF zi_student_0008 IN LOCAL MODE
+          ENTITY Student
+          UPDATE
+          FIELDS ( Salary ) WITH VALUE #( ( %tky = ls_role-%tky Salary = 1000 ) ).
+        WHEN 'Teacher'.
+          MODIFY ENTITIES OF zi_student_0008 IN LOCAL MODE
+          ENTITY Student
+          UPDATE
+          FIELDS ( Salary ) WITH VALUE #( ( %tky = ls_role-%tky Salary = 900 ) ).
       ENDCASE.
     ENDLOOP.
 

@@ -7,7 +7,7 @@ define behavior for ZI_STUDENT_0008 alias Student
 persistent table zgy_rap_0008
 draft table zgy_rapd_0008
 lock master total etag Lastchangedat
-authorization master ( instance )
+authorization master ( global, instance )
 etag master Locallastchangedat
 {
   create;

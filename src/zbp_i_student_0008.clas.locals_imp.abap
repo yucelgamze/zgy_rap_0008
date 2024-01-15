@@ -15,12 +15,29 @@ CLASS lhc_Student DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR student~changesalary.
     METHODS precheck_update FOR PRECHECK
       IMPORTING entities FOR UPDATE student.
+    METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
+      IMPORTING REQUEST requested_authorizations FOR student RESULT result.
+
+    METHODS is_update_allowed
+      RETURNING VALUE(update_allowed) TYPE abap_bool.
 
 ENDCLASS.
 
 CLASS lhc_Student IMPLEMENTATION.
 
   METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+  METHOD get_global_authorizations.
+    IF requested_authorizations-%update = if_abap_behv=>mk-on OR requested_authorizations-%action-Edit = if_abap_behv=>mk-on .
+      IF is_update_allowed(  ) = abap_true.
+        result-%update = if_abap_behv=>auth-allowed.
+        result-%action-Edit = if_abap_behv=>auth-allowed.
+      ELSE.
+        result-%update = if_abap_behv=>auth-unauthorized.
+        result-%action-Edit = if_abap_behv=>auth-unauthorized.
+      ENDIF.
+    ENDIF.
   ENDMETHOD.
 
   METHOD get_instance_features.
@@ -158,6 +175,13 @@ CLASS lhc_Student IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
+  ENDMETHOD.
+
+
+
+  METHOD is_update_allowed.
+    update_allowed = abap_true.
+    "normalde authorization object ile yapılıyor.
   ENDMETHOD.
 
 ENDCLASS.

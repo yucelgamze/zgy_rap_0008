@@ -26,6 +26,36 @@ ENDCLASS.
 CLASS lhc_Student IMPLEMENTATION.
 
   METHOD get_instance_authorizations.
+    DATA:update_requested TYPE abap_bool,
+         update_granted   TYPE abap_bool.
+
+    READ ENTITIES OF zi_student_0008 IN LOCAL MODE
+    ENTITY Student
+    FIELDS ( Status ) WITH CORRESPONDING #( keys )
+    RESULT DATA(studentadmitted)
+    FAILED failed.
+
+    CHECK studentadmitted IS NOT INITIAL.
+
+    update_requested = COND #( WHEN requested_authorizations-%update = if_abap_behv=>mk-on OR
+    requested_authorizations-%action-Edit = if_abap_behv=>mk-on THEN abap_true ELSE abap_false ).
+
+    LOOP AT studentadmitted ASSIGNING FIELD-SYMBOL(<lfs_studentadmitted>).
+      IF <lfs_studentadmitted>-Status = abap_false.
+        IF update_requested = abap_true.
+          update_granted = is_update_allowed( ).
+          IF update_granted = abap_false.
+            APPEND VALUE #( %tky = <lfs_studentadmitted>-%tky ) TO failed-student.
+            APPEND VALUE #( %tky = keys[ 1 ]-%tky
+            %msg = new_message_with_text(
+                     severity = if_abap_behv_message=>severity-error
+                     text     = |No authorization to update status!|
+                   ) ) TO reported-student.
+          ENDIF.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+
   ENDMETHOD.
 
   METHOD get_global_authorizations.
